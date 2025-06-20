@@ -1,0 +1,112 @@
+import express from "express";
+import { Book } from "../models/book.model";
+
+export const bookRouter = express.Router();
+
+// create book
+bookRouter.post("/", async (req, res) => {
+  const body = req.body;
+  try {
+    const book = await Book.create(body);
+    res.status(201).json({
+      success: true,
+      message: "Book created successfully",
+      data: book,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error in creating book",
+      error: error,
+    });
+  }
+});
+
+// get all books
+bookRouter.get("/", async (req, res) => {
+  const { filter, sortBy, sort, limit } = req.query;
+  const query: any = {};
+  if (filter) {
+    query.genre = filter;
+  }
+  if (sortBy && sort) {
+    query["sortBy"] = sort;
+  }
+  if (limit) {
+    query.limit = limit;
+  }
+  try {
+    const books = await Book.find(query);
+    res.status(200).json({
+      success: true,
+      message: "Books retrieved successfully",
+      data: books,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error in retrieving books",
+      error: error,
+    });
+  }
+});
+
+// get book by id
+bookRouter.get("/:bookId", async (req, res) => {
+  const bookId = req.params.bookId;
+  try {
+    const book = await Book.findById(bookId);
+    res.status(200).json({
+      success: true,
+      message: "Book retrieved successfully",
+      data: book,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error in retrieving book",
+      error: error,
+    });
+  }
+});
+
+// update book by Id
+bookRouter.put("/:bookId", async (req, res) => {
+  const bookId = req.params.bookId;
+  const updatedBookData = req.body;
+  try {
+    const book = await Book.findByIdAndUpdate(bookId, updatedBookData, {
+        new: true
+    });
+    res.status(200).json({
+      success: true,
+      message: "Book updated successfully",
+      data: book,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error in updating book",
+      error: error,
+    });
+  }
+});
+
+// delete book by id
+bookRouter.delete("/:bookId", async (req, res) => {
+  const bookId = req.params.bookId;
+  try {
+    const book = await Book.findByIdAndDelete(bookId);
+    res.status(200).json({
+        success: true,
+        message: "Book deleted successfully",
+        data: book
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error in deleting book",
+      error: error,
+    });
+  }
+});
