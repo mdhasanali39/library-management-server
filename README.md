@@ -70,7 +70,7 @@ cd library-management-server
 ```
 4️⃣ Run the server
 ```bash
-npm run dev
+npm run start:dev
 ```
 
 📌 API Endpoints
