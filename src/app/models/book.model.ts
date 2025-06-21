@@ -15,7 +15,11 @@ const bookSchema = new Schema<IBook, Model<IBook>, bookMethods>(
     ],
     isbn: { type: String, required: true, unique: true },
     description: { type: String, default: "" },
-    copies: { type: Number, required: true, min: [0, "Copies must be minimum 0 or greater"] },
+    copies: {
+      type: Number,
+      required: true,
+      min: [0, "Copies must be a positive number"],
+    },
     available: { type: Boolean, default: true },
   },
   {

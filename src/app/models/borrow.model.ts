@@ -5,7 +5,7 @@ import { Book } from "./book.model";
 const borrowSchema = new Schema<IBorrow>(
   {
     book: { type: Schema.Types.ObjectId, ref: "Book", required: true },
-    quantity: { type: Number, required: true, min: 1 },
+    quantity: { type: Number, required: true, min: [1, "Quantity must be a positive number and greater than 0"] },
     dueDate: { type: Date, required: true },
   },
   {

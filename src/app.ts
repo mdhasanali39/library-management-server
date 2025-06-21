@@ -1,8 +1,12 @@
-import express, { ErrorRequestHandler, NextFunction, Request, Response } from "express"
-import cors from "cors"
+import express, {
+  ErrorRequestHandler,
+  NextFunction,
+  Request,
+  Response,
+} from "express";
+import cors from "cors";
 import { bookRouter } from "./app/controllers/book.controller";
 import { borrowRouter } from "./app/controllers/borrow.controller";
-
 
 const app = express();
 
@@ -11,22 +15,32 @@ app.use(express.json());
 // app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
-// routes 
+// routes
 app.use("/api/books", bookRouter);
 app.use("/api/borrow", borrowRouter);
 
 // health check
-app.get("/", (req, res) =>{
-    res.send("Library Management server in running well");
-})  
+app.get("/", (req, res) => {
+  res.send("Library Management server in running well");
+});
 
 // global error handler
-app.use((error: any, req: Request, res:Response, next:NextFunction)=>{
-    res.status(500).json({
-        success: false,
-        message: error.message,
-        error: error
-    })
-})
+const globalErrorHandler = ((error: any, req: Request, res: Response, next: NextFunction) => {
+  if (error.name === "ValidationError") {
+    return res.status(400).json({
+      success: false,
+      message: "Validation failed",
+      error: error,
+    });
+  }
 
-export default app
+  res.status(error.statusCode || 500).json({
+    message: error.message || "Internal Server Error",
+    success: false,
+    error: error,
+  });
+});
+
+app.use(globalErrorHandler as ErrorRequestHandler);
+
+export default app;

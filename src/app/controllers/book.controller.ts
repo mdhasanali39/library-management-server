@@ -5,24 +5,28 @@ import { sendError } from "../../utils/sendError";
 export const bookRouter = express.Router();
 
 // create book
-bookRouter.post("/", async (req: Request, res: Response, next:NextFunction) => {
-  const body = req.body;
-  try {
-    const book = await Book.create(body);
-    res.status(201).json({
-      success: true,
-      message: "Book created successfully",
-      data: book,
-    });
-  } catch (error) {
-    sendError(res, "Validation Failed", error);
+bookRouter.post(
+  "/",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const body = req.body;
+    try {
+      const book = await Book.create(body);
+      res.status(201).json({
+        success: true,
+        message: "Book created successfully",
+        data: book,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // get all books
-bookRouter.get("/", async (req: Request, res: Response) => {
+bookRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
   const { filter, sortBy, sort, limit } = req.query;
   const query: any = {};
+  
   if (filter) {
     query.genre = filter;
   }
@@ -36,70 +40,76 @@ bookRouter.get("/", async (req: Request, res: Response) => {
       data: books,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Error in retrieving books",
-      error: error,
-    });
+    next(error);
   }
 });
 
 // get book by id
-bookRouter.get("/:bookId", async (req: Request, res: Response) => {
-  const bookId = req.params.bookId;
-  try {
-    const book = await Book.findById(bookId);
-    res.status(200).json({
-      success: true,
-      message: "Book retrieved successfully",
-      data: book,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Error in retrieving book",
-      error: error,
-    });
+bookRouter.get(
+  "/:bookId",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const bookId = req.params.bookId;
+    try {
+      const book = await Book.findById(bookId);
+      if(!book) {
+        return sendError(res, "Book not found", null, 404);
+      }
+      res.status(200).json({
+        success: true,
+        message: "Book retrieved successfully",
+        data: book,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // update book by Id
-bookRouter.put("/:bookId", async (req: Request, res: Response) => {
-  const bookId = req.params.bookId;
-  const updatedBookData = req.body;
-  try {
-    const book = await Book.findByIdAndUpdate(bookId, updatedBookData, {
-      new: true,
-    });
-    res.status(200).json({
-      success: true,
-      message: "Book updated successfully",
-      data: book,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Error in updating book",
-      error: error,
-    });
+bookRouter.put(
+  "/:bookId",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const bookId = req.params.bookId;
+    const updatedBookData = req.body;
+    try {
+      const book = await Book.findByIdAndUpdate(bookId, updatedBookData, {
+        new: true,
+        runValidators:true, // this is a new things for me, and its help us to enable validators to validate with schema
+      });
+      if (!book) {
+        return sendError(res, "Book not found", null, 404);
+      }
+      await book?.updateBookAvailability();
+      res.status(200).json({
+        success: true,
+        message: "Book updated successfully",
+        data: book,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // delete book by id
-bookRouter.delete("/:bookId", async (req: Request, res: Response) => {
-  const bookId = req.params.bookId;
-  try {
-    const book = await Book.findByIdAndDelete(bookId);
-    res.status(200).json({
-      success: true,
-      message: "Book deleted successfully",
-      data: book,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Error in deleting book",
-      error: error,
-    });
+bookRouter.delete(
+  "/:bookId",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const bookId = req.params.bookId;
+    try {
+      const book = await Book.findByIdAndDelete(bookId);
+
+      if (!book) {
+        return sendError(res, "Book not found", null, 404);
+      }
+
+      res.status(200).json({
+        success: true,
+        message: "Book deleted successfully",
+        data: book,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);

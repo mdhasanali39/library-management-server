@@ -1,25 +1,20 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import { Book } from "../models/book.model";
 import { Borrow } from "../models/borrow.model";
+import { sendError } from "../../utils/sendError";
 
 export const borrowRouter = express.Router();
 
 // create borrow
-borrowRouter.post("/", async (req: Request, res: Response) => {
+borrowRouter.post("/", async (req: Request, res: Response, next: NextFunction) => {
   const { book: bookId, quantity, dueDate } = req.body;
   try {
     const book: any = await Book.findById(bookId);
     if (!book) {
-      res.status(404).json({
-        success: false,
-        message: "Book not found",
-      });
+      return sendError(res, "Book not found", null, 404);
     }
     if (quantity > book.copies) {
-      res.status(400).json({
-        success: false,
-        message: "Not enough copies",
-      });
+      return sendError(res, "Not enough copies available", null, 400);
     }
 
     const borrow = await Borrow.create({ book: bookId, quantity, dueDate });
@@ -29,11 +24,7 @@ borrowRouter.post("/", async (req: Request, res: Response) => {
       data: borrow,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Error in deleting book",
-      error: error,
-    });
+    next(error);
   }
 });
 
