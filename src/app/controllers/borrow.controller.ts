@@ -1,11 +1,11 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import { Book } from "../models/book.model";
 import { Borrow } from "../models/borrow.model";
 
 export const borrowRouter = express.Router();
 
 // create borrow
-borrowRouter.post("/", async (req, res) => {
+borrowRouter.post("/", async (req: Request, res: Response) => {
   const { book: bookId, quantity, dueDate } = req.body;
   try {
     const book: any = await Book.findById(bookId);
@@ -37,7 +37,7 @@ borrowRouter.post("/", async (req, res) => {
   }
 });
 
-borrowRouter.get("/", async (req, res) => {
+borrowRouter.get("/", async (req: Request, res: Response) => {
   const summary = await Borrow.aggregate([
     {
       $group: {
@@ -67,7 +67,7 @@ borrowRouter.get("/", async (req, res) => {
       },
     },
     {
-      $sort: { totalQuantity : -1},
+      $sort: { totalQuantity: -1 },
     },
   ]);
 
