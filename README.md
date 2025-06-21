@@ -101,12 +101,12 @@ POST /api/books
 - sort: asc or desc
 - limit: number of results (default: 10)
 
-✅ Get Book by ID
--- GET /api/books/:bookId
+✅ Get Book by ID <br>
+  GET /api/books/:bookId
 
 ✅ Returns details of the specific book.
 
-✅ Update Book
+✅ Update Book <br>
 PUT /api/books/:bookId
 ```json
 {
@@ -115,12 +115,12 @@ PUT /api/books/:bookId
 ```
 ✅ Updates fields and re-validates schema.
 
-✅ Delete Book
-DELETE /api/books/:bookId
+✅ Delete Book <br>
+DELETE /api/books/:bookId <br>
 
 ✅ Deletes a book by ID.
 
-✅ Borrow a Book
+✅ Borrow a Book <br>
 POST /api/borrow
 ```json
 {
@@ -166,4 +166,4 @@ Returns aggregated summary:
 
 🧑‍💻 Author
 Md Hasan ali
-[GitHub Profile]
+[GitHub Profile](https://github.com/mdhasanali39)
