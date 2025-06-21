@@ -26,28 +26,26 @@ This project allows you to manage books, borrow them with availability checks, a
 
 ## 📁 Project Structure
 
-📁 node_modules
-📁 src
- └── 📁 app
-      ├── 📁 controllers
-      │     ├── 📄 book.controller.ts
-      │     └── 📄 borrow.controller.ts
-      ├── 📁 interfaces
-      │     ├── 📄 book.interface.ts
-      │     └── 📄 borrow.interface.ts
-      ├── 📁 models
-      │     ├── 📄 book.model.ts
-      │     └── 📄 borrow.model.ts
-      ├── 📁 utils
-      ├── 📄 app.ts
-      └── 📄 server.ts
-📄 .env
-📄 .gitignore
-📄 package-lock.json
-📄 package.json
-📄 tsconfig.json
-
-
+📁 node_modules <br>
+📁 src <br>
+ └── 📁 app <br>
+      ├── 📁 controllers <br>
+      │     ├── 📄 book.controller.ts <br>
+      │     └── 📄 borrow.controller.ts <br>
+      ├── 📁 interfaces <br>
+      │     ├── 📄 book.interface.ts <br>
+      │     └── 📄 borrow.interface.ts <br>
+      ├── 📁 models <br>
+      │     ├── 📄 book.model.ts <br>
+      │     └── 📄 borrow.model.ts <br>
+      ├── 📁 utils <br>
+      ├── 📄 app.ts <br>
+      └── 📄 server.ts <br>
+📄 .env <br>
+📄 .gitignore <br>
+📄 package-lock.json <br>
+📄 package.json <br>
+📄 tsconfig.json <br>
 ---
 
 ## 🚀 Setup Instructions
@@ -64,7 +62,7 @@ cd library-management-server
 ```
 3️⃣ Create .env
 ```bash
-  PORT=5000
+  PORT=3000
   MONGO_URI=mongodb://localhost:27017/library
 
 ```
