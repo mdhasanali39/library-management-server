@@ -56,7 +56,7 @@ This project allows you to manage books, borrow them with availability checks, a
 git clone https://github.com/mdhasanali39/library-management-server.git
 cd library-management-server
 ```
-2️⃣ ** Install dependencies **
+2️⃣ **Install dependencies**
 ```bash
  npm install
 ```
@@ -66,12 +66,12 @@ cd library-management-server
   MONGO_URI=mongodb://localhost:27017/library
 
 ```
-4️⃣ Run the server
+4️⃣ **Run the server**
 ```bash
 npm run start:dev
 ```
 
-📌 API Endpoints
+📌 **API Endpoints**
 ✅ Create Book
 POST /api/books
 ```json
