@@ -20,7 +20,7 @@ This project allows you to manage books, borrow them with availability checks, a
 
 - **Backend:** Express, TypeScript
 - **Database:** MongoDB with Mongoose
-- **Validation & Business Logic:** Mongoose schema, validators, static & instance methods, middleware.
+- **Validation & Business Logic:** Mongoose schema, validators, instance methods, middleware.
 
 ---
 
