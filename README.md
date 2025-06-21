@@ -59,17 +59,17 @@ git clone https://github.com/mdhasanali39/library-management-server.git
 cd library-management-server
 ```
 2️⃣ ** Install dependencies **
-```
+```bash
  npm install
 ```
 3️⃣ Create .env
-```
+```bash
   PORT=5000
   MONGO_URI=mongodb://localhost:27017/library
 
 ```
 4️⃣ Run the server
-```
+```bash
 npm run dev
 ```
 
@@ -87,7 +87,7 @@ POST /api/books
 }
 ```
 ✅ Success Response
-```
+```json
 {
   "success": true,
   "message": "Book created successfully",
@@ -102,7 +102,7 @@ POST /api/books
 - limit: number of results (default: 10)
 
 ✅ Get Book by ID
-GET /api/books/:bookId
+-- GET /api/books/:bookId
 
 ✅ Returns details of the specific book.
 
@@ -122,18 +122,18 @@ DELETE /api/books/:bookId
 
 ✅ Borrow a Book
 POST /api/borrow
-```
+```json
 {
   "book": "BOOK_ID",
   "quantity": 2,
   "dueDate": "2025-07-18T00:00:00.000Z"
 }
 ```
-Checks if enough copies are available.
+- Checks if enough copies are available.
 
-Deducts borrowed quantity.
+- Deducts borrowed quantity.
 
-Marks book as unavailable if no copies left.
+- Marks book as unavailable if no copies left.
 
 ✅ Success Response
 ```json
@@ -148,7 +148,7 @@ Marks book as unavailable if no copies left.
 GET /api/borrow
 
 Returns aggregated summary:
-```
+```json
 {
   "success": true,
   "message": "Borrowed books summary retrieved successfully",
