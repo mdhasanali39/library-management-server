@@ -29,14 +29,10 @@ bookRouter.get("/", async (req, res) => {
   if (filter) {
     query.genre = filter;
   }
-  if (sortBy && sort) {
-    query["sortBy"] = sort;
-  }
-  if (limit) {
-    query.limit = limit;
-  }
   try {
-    const books = await Book.find(query);
+    const books = await Book.find(query)
+      .sort({ [sortBy as string]: sort === "desc" ? -1 : 1 })
+      .limit(Number(limit));
     res.status(200).json({
       success: true,
       message: "Books retrieved successfully",
@@ -76,7 +72,7 @@ bookRouter.put("/:bookId", async (req, res) => {
   const updatedBookData = req.body;
   try {
     const book = await Book.findByIdAndUpdate(bookId, updatedBookData, {
-        new: true
+      new: true,
     });
     res.status(200).json({
       success: true,
@@ -98,10 +94,10 @@ bookRouter.delete("/:bookId", async (req, res) => {
   try {
     const book = await Book.findByIdAndDelete(bookId);
     res.status(200).json({
-        success: true,
-        message: "Book deleted successfully",
-        data: book
-    })
+      success: true,
+      message: "Book deleted successfully",
+      data: book,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,

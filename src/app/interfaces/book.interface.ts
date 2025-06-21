@@ -9,12 +9,12 @@ export interface IBook {
     | "BIOGRAPHY"
     | "FANTASY";
   isbn: string;
-  description: string;
+  description?: string;
   copies: number;
   available: boolean;
 }
 
 
-export interface instanceMethods {
-  updateBookAvailability(available: boolean): string;
+export interface bookMethods {
+  updateBookAvailability: () => Promise<void>;
 } 
