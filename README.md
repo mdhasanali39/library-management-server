@@ -104,7 +104,7 @@ GET /api/books?filter=FANTASY&sortBy=createdAt&sort=desc&limit=5
 ✅ Get Book by ID <br>
   GET /api/books/:bookId
 
-✅ Returns details of the specific book. <br>
+- Returns details of the specific book. <br>
 
 ✅ Update Book <br>
 PUT /api/books/:bookId
@@ -113,12 +113,12 @@ PUT /api/books/:bookId
   "copies": 50
 }
 ```
-✅ Updates fields and re-validates schema. <br> <br>
+- Updates fields and re-validates schema. <br> <br>
 
 ✅ Delete Book <br>
 DELETE /api/books/:bookId <br>
 
-✅ Deletes a book by ID. <br>
+- Deletes a book by ID. <br>
 
 ✅ Borrow a Book <br>
 POST /api/borrow
