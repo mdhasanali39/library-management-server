@@ -54,6 +54,8 @@ This project allows you to manage books, borrow them with availability checks, a
 
 ```bash
 git clone https://github.com/mdhasanali39/library-management-server.git
+```
+```bash
 cd library-management-server
 ```
 2️⃣ **Install dependencies**
@@ -71,8 +73,8 @@ cd library-management-server
 npm run start:dev
 ```
 
-📌 **API Endpoints**
-✅ Create Book
+📌 **API Endpoints** <br>
+✅ Create Book <br>
 POST /api/books
 ```json
 {
@@ -92,7 +94,7 @@ POST /api/books
   "data": { ... }
 }
 ```
-✅ Get All Books
+✅ Get All Books <br>
 GET /api/books?filter=FANTASY&sortBy=createdAt&sort=desc&limit=5
 - filter: genre
 - sortBy: field to sort by (default: createdAt)
