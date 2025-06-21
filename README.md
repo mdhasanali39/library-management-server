@@ -95,7 +95,7 @@ POST /api/books
 }
 ```
 ✅ Get All Books
-- GET /api/books?filter=FANTASY&sortBy=createdAt&sort=desc&limit=5
+GET /api/books?filter=FANTASY&sortBy=createdAt&sort=desc&limit=5
 - filter: genre
 - sortBy: field to sort by (default: createdAt)
 - sort: asc or desc
@@ -104,7 +104,7 @@ POST /api/books
 ✅ Get Book by ID <br>
   GET /api/books/:bookId
 
-✅ Returns details of the specific book.
+✅ Returns details of the specific book. <br>
 
 ✅ Update Book <br>
 PUT /api/books/:bookId
@@ -113,12 +113,12 @@ PUT /api/books/:bookId
   "copies": 50
 }
 ```
-✅ Updates fields and re-validates schema.
+✅ Updates fields and re-validates schema. <br> <br>
 
 ✅ Delete Book <br>
 DELETE /api/books/:bookId <br>
 
-✅ Deletes a book by ID.
+✅ Deletes a book by ID. <br>
 
 ✅ Borrow a Book <br>
 POST /api/borrow
@@ -164,6 +164,6 @@ Returns aggregated summary:
 }
 ```
 
-🧑‍💻 Author
-Md Hasan ali
+🧑‍💻 Author <br>
+Md Hasan ali <br>
 [GitHub Profile](https://github.com/mdhasanali39)
