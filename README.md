@@ -1,4 +1,4 @@
-# 📚 Library Management API
+# 📚 Library Management Server
 
 A **Library Management System** built with **Express**, **TypeScript**, and **MongoDB (Mongoose)**.  
 This project allows you to manage books, borrow them with availability checks, and view borrowed book summaries — with clean API design and consistent error handling.
