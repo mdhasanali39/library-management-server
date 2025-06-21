@@ -7,8 +7,11 @@ import express, {
 import cors from "cors";
 import { bookRouter } from "./app/controllers/book.controller";
 import { borrowRouter } from "./app/controllers/borrow.controller";
-
+import dotenv from 'dotenv';
 const app = express();
+
+// config dotenv
+dotenv.config();
 
 // middleware
 app.use(express.json());
