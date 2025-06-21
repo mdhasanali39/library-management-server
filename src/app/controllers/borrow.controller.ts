@@ -41,17 +41,17 @@ borrowRouter.get("/", async (req: Request, res: Response) => {
         from: "books",
         localField: "_id",
         foreignField: "_id",
-        as: "bookrr",
+        as: "book",
       },
     },
     {
-      $unwind: "$bookrr",
+      $unwind: "$book",
     },
     {
       $project: {
         book: {
-          title: "$bookrr.title",
-          isbn: "$bookrr.isbn",
+          title: "$book.title",
+          isbn: "$book.isbn",
         },
         _id: 0,
         totalQuantity: 1,
