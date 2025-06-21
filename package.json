@@ -1,7 +1,7 @@
 {
   "name": "library_management_server",
   "version": "1.0.0",
-  "main": "dist/server.js",
+  "main": "./dist/server.js",
   "scripts": {
     "start": "node ./dist/server.js",
     "start:prod": "nodemon ./dist/server.js",
