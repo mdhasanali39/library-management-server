@@ -1,10 +1,11 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import { Book } from "../models/book.model";
+import { sendError } from "../../utils/sendError";
 
 export const bookRouter = express.Router();
 
 // create book
-bookRouter.post("/", async (req: Request, res: Response) => {
+bookRouter.post("/", async (req: Request, res: Response, next:NextFunction) => {
   const body = req.body;
   try {
     const book = await Book.create(body);
@@ -14,11 +15,7 @@ bookRouter.post("/", async (req: Request, res: Response) => {
       data: book,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Error in creating book",
-      error: error,
-    });
+    sendError(res, "Validation Failed", error);
   }
 });
 
