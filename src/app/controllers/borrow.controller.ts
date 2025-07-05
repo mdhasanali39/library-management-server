@@ -29,6 +29,25 @@ borrowRouter.post("/", async (req: Request, res: Response, next: NextFunction) =
 });
 
 borrowRouter.get("/", async (req: Request, res: Response) => {
+
+  const { page = "1", limit = "10" } = req.query;
+
+    const pageNumber = parseInt(page as string, 10);
+    const limitNumber = parseInt(limit as string, 10);
+    const skip = (pageNumber - 1) * limitNumber;
+
+    // get the total count
+    const totalResult = await Borrow.aggregate([
+      {
+        $group: {
+          _id: "$book",
+          totalQuantity: { $sum: "$quantity" },
+        },
+      }
+    ]);
+    const total = totalResult.length;
+    const totalPage = Math.ceil(total / limitNumber);
+
   const summary = await Borrow.aggregate([
     {
       $group: {
@@ -60,11 +79,23 @@ borrowRouter.get("/", async (req: Request, res: Response) => {
     {
       $sort: { totalQuantity: -1 },
     },
+    {
+      $skip: skip,
+    },
+    {
+      $limit: limitNumber,
+    },
   ]);
 
   res.status(200).json({
     success: true,
     message: "Borrowed books summary retrieved successfully",
     data: summary,
+    pagination: {
+      page: pageNumber,
+      limit: limitNumber,
+      total,
+      totalPage,
+    },
   });
 });
