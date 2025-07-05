@@ -53,17 +53,17 @@ exports.borrowRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, fu
                 from: "books",
                 localField: "_id",
                 foreignField: "_id",
-                as: "bookrr",
+                as: "book",
             },
         },
         {
-            $unwind: "$bookrr",
+            $unwind: "$book",
         },
         {
             $project: {
                 book: {
-                    title: "$bookrr.title",
-                    isbn: "$bookrr.isbn",
+                    title: "$book.title",
+                    isbn: "$book.isbn",
                 },
                 _id: 0,
                 totalQuantity: 1,

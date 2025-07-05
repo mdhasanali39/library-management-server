@@ -40,8 +40,7 @@ bookRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
     const totalPage = Math.ceil(total / limitNumber);
 
     const books = await Book.find(query)
-      .sort({ [sortBy as string]: sort === "desc" ? -1 : 1 }).skip(skip)
-      .limit(limitNumber);
+      .sort({ [sortBy as string]: sort === "desc" ? -1 : 1 }).skip(skip).limit(limitNumber);
 
     res.status(200).json({
       success: true,

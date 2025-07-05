@@ -13,7 +13,6 @@ const app = (0, express_1.default)();
 dotenv_1.default.config();
 // middleware
 app.use(express_1.default.json());
-// app.use(express.urlencoded({extended: true}));
 app.use((0, cors_1.default)());
 // routes
 app.use("/api/books", book_controller_1.bookRouter);
