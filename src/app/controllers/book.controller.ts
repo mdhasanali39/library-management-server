@@ -24,13 +24,21 @@ bookRouter.post(
 
 // get all books
 bookRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
-  const { filter, sortBy, sort, limit } = req.query;
-  const query: any = {};
-  
-  if (filter) {
-    query.genre = filter;
-  }
   try {
+    const { filter, sortBy, sort, limit = "10", page = "1" } = req.query;
+    const query: any = {};
+
+    if (filter) {
+      query.genre = filter;
+    }
+
+    const pageNumber = parseInt(page as string, 10);
+    const limitNumber = parseInt(limit as string, 10);
+    const skip = (pageNumber - 1) * limitNumber;
+
+    const total = await Book.countDocuments(query);
+    const totalPage = Math.ceil(total / limitNumber);
+
     const books = await Book.find(query)
       .sort({ [sortBy as string]: sort === "desc" ? -1 : 1 })
       .limit(Number(limit));
@@ -38,6 +46,12 @@ bookRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
       success: true,
       message: "Books retrieved successfully",
       data: books,
+      pagination:{
+        page: pageNumber,
+        limit: limitNumber,
+        total,
+        totalPage,
+      }
     });
   } catch (error) {
     next(error);
