@@ -41,7 +41,8 @@ bookRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
 
     const books = await Book.find(query)
       .sort({ [sortBy as string]: sort === "desc" ? -1 : 1 }).skip(skip)
-      .limit(Number(limit));
+      .limit(limitNumber);
+
     res.status(200).json({
       success: true,
       message: "Books retrieved successfully",
